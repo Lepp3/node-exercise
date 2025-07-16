@@ -25,6 +25,10 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
+      type: {
+        type: Sequelize.ENUM('supplier', 'customer'),
+        allowNull: false,
+      },
       modifiedBy: {
         type: Sequelize.UUID,
         allowNull: false,

@@ -23,6 +23,11 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
+      supportType: {
+        type: Sequelize.ENUM('solid', 'liquid'),
+        allowNull: false,
+        field: 'supportType',
+      },
       modifiedBy: {
         type: Sequelize.UUID,
         allowNull: false,
