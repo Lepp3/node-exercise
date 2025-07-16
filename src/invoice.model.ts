@@ -17,8 +17,8 @@ class InvoiceModel
   public id!: string;
   public date!: Date;
   public orderId!: string;
-  public readonly createdAt?: Date;
-  public readonly updatedAt?: Date;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
   public readonly deletedAt?: Date;
   public modifiedBy!: string;
 

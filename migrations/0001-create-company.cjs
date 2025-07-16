@@ -1,11 +1,10 @@
-'use strict';
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('user', {
+    await queryInterface.createTable('company', {
       id: {
         type: Sequelize.UUID,
+        allowNull: false,
         primaryKey: true,
         defaultValue: Sequelize.literal('gen_random_uuid()'),
       },
@@ -13,42 +12,32 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      username: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      company_id: {
+      modifiedBy: {
         type: Sequelize.UUID,
         allowNull: false,
       },
-      modified_by: {
-        type: Sequelize.UUID,
+      createdAt: {
+        type: Sequelize.DATE,
         allowNull: false,
-      },
-      created_at: {
-        type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now'),
+        field: 'createdAt',
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
+        allowNull: false,
         defaultValue: Sequelize.fn('now'),
+        field: 'updatedAt',
       },
-      deleted_at: {
+      deletedAt: {
         type: Sequelize.DATE,
         allowNull: true,
+        defaultValue: null,
+        field: 'deletedAt',
       },
     });
   },
 
-  async down(queryInterface) {
-    await queryInterface.dropTable('user');
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable('company');
   },
 };
