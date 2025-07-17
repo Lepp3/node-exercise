@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
-interface OrderItemsProperties {
+export interface OrderItemsProperties {
   id: string;
   productId: string;
   orderId: string;

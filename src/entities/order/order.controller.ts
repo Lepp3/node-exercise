@@ -6,8 +6,8 @@ const orderService = new OrderService();
 
 orderController.get('/', async (req: Request, res: Response) => {
   try {
-    const users = await orderService.getAll();
-    res.status(200).json(users);
+    const orders = await orderService.getAll();
+    res.status(200).json(orders);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -56,3 +56,5 @@ orderController.delete('/:id', async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+
+export default orderController;

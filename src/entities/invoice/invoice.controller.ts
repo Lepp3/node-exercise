@@ -56,3 +56,5 @@ invoiceController.delete('/:id', async (req: Request, res: Response) => {
     res.status(500).json(error);
   }
 });
+
+export default invoiceController;
