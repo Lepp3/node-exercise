@@ -12,10 +12,9 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(
-  '/api',
-  apiRouter
-)(async () => {
+app.use('/api', apiRouter);
+
+(async () => {
   try {
     await sequelize.authenticate();
     console.log('Database connection has been established successfully.');
