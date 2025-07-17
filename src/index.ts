@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { sequelize } from './config/database.js';
 import { config } from 'dotenv';
+import apiRouter from './routes/index.js';
 
 config();
 
@@ -11,8 +12,10 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-
-(async () => {
+app.use(
+  '/api',
+  apiRouter
+)(async () => {
   try {
     await sequelize.authenticate();
     console.log('Database connection has been established successfully.');

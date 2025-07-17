@@ -15,8 +15,8 @@ class CompanyModel
 {
   public id!: string;
   public name!: string;
-  public readonly createdAt?: Date;
-  public readonly updatedAt?: Date;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
   public readonly deletedAt?: Date;
   public modifiedBy!: string;
 
@@ -56,6 +56,7 @@ class CompanyModel
       {
         sequelize,
         tableName: 'company',
+        freezeTableName: true,
         timestamps: true,
         paranoid: true,
       }

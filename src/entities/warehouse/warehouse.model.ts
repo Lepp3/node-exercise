@@ -23,8 +23,8 @@ class WarehouseModel
   public companyId!: string;
   public name!: string;
   public supportType!: SupportType;
-  public readonly createdAt?: Date;
-  public readonly updatedAt?: Date;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
   public readonly deletedAt?: Date;
   public modifiedBy!: string;
 
@@ -74,6 +74,7 @@ class WarehouseModel
       {
         sequelize,
         tableName: 'warehouse',
+        freezeTableName: true,
         timestamps: true,
         paranoid: true,
       }

@@ -1,5 +1,8 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
-import { type PartnerType, PartnerTypeEnum } from './utility/utilityTypes.js';
+import {
+  type PartnerType,
+  PartnerTypeEnum,
+} from '../../utility/utilityTypes.js';
 
 interface PartnerProperties {
   id: string;
@@ -72,6 +75,7 @@ class PartnerModel
       },
       {
         sequelize,
+        freezeTableName: true,
         tableName: 'partner',
         timestamps: true,
         paranoid: true,

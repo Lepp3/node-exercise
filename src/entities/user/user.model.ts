@@ -23,8 +23,8 @@ class UserModel
   public username!: string;
   public password!: string;
   public email!: string;
-  public readonly createdAt?: Date;
-  public readonly updatedAt?: Date;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
   public readonly deletedAt?: Date;
   public modifiedBy!: string;
 
@@ -81,6 +81,7 @@ class UserModel
       {
         sequelize,
         tableName: 'user',
+        freezeTableName: true,
         timestamps: true,
         paranoid: true,
       }

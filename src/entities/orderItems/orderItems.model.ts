@@ -19,8 +19,8 @@ class OrderItemsModel
   public productId!: string;
   public quantity!: number;
   public orderId!: string;
-  public readonly createdAt?: Date;
-  public readonly updatedAt?: Date;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
   public readonly deletedAt?: Date;
   public modifiedBy!: string;
 
@@ -69,6 +69,7 @@ class OrderItemsModel
       },
       {
         sequelize,
+        freezeTableName: true,
         tableName: 'orderItems',
         timestamps: true,
         paranoid: true,

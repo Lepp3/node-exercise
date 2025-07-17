@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
-import { type OrderType, OrderTypeEnum } from './utility/utilityTypes.js';
+import { type OrderType, OrderTypeEnum } from '../../utility/utilityTypes.js';
 
 interface OrderProperties {
   id: string;
@@ -24,8 +24,8 @@ class OrderModel
   public type!: OrderType;
   public date!: Date;
   public partnerId!: string;
-  public readonly createdAt?: Date;
-  public readonly updatedAt?: Date;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
   public readonly deletedAt?: Date;
   public modifiedBy!: string;
 
@@ -85,6 +85,7 @@ class OrderModel
       {
         sequelize,
         tableName: 'order',
+        freezeTableName: true,
         timestamps: true,
         paranoid: true,
       }

@@ -1,5 +1,8 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
-import { type SupportType, SupportTypeEnum } from './utility/utilityTypes.js';
+import {
+  type SupportType,
+  SupportTypeEnum,
+} from '../../utility/utilityTypes.js';
 
 interface ProductProperties {
   id: string;
@@ -20,8 +23,8 @@ class ProductModel
   public companyId!: string;
   public name!: string;
   public type!: SupportType;
-  public readonly createdAt?: Date;
-  public readonly updatedAt?: Date;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
   public readonly deletedAt?: Date;
   public modifiedBy!: string;
 
@@ -70,6 +73,7 @@ class ProductModel
       {
         sequelize,
         tableName: 'product',
+        freezeTableName: true,
         timestamps: true,
         paranoid: true,
       }
