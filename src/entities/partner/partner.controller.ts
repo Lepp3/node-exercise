@@ -4,10 +4,9 @@ import { PartnerService } from './partner.service.js';
 const partnerController = Router();
 const partnerService = new PartnerService();
 
-partnerController.get('/loyal/:id', async (req: Request, res: Response) => {
-  const companyId = req.params.id;
+partnerController.get('/loyal', async (req: Request, res: Response) => {
   try {
-    const loyalCustomer = await partnerService.getLoyalCustomer(companyId);
+    const loyalCustomer = await partnerService.getLoyalCustomer();
     res.status(200).json(loyalCustomer);
   } catch (error) {
     res.status(500).json(error);

@@ -4,6 +4,15 @@ import { ProductService } from './product.service.js';
 const productController = Router();
 const productService = new ProductService();
 
+productController.get('/best-selling', async (req: Request, res: Response) => {
+  try {
+    const bestSeller = await productService.getBestSellingProduct();
+    res.status(200).json(bestSeller);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 productController.get('/', async (req: Request, res: Response) => {
   try {
     const products = await productService.getAll();

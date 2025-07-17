@@ -43,7 +43,7 @@ export class PartnerService {
     await partner.destroy();
   }
 
-  async getLoyalCustomer(companyId: string) {
+  async getLoyalCustomer() {
     const results = await sequelize.query(
       `
     SELECT o."companyId",
@@ -51,16 +51,13 @@ export class PartnerService {
            count(o.id) AS "totalOrders"
     FROM "order" o
     JOIN partner c ON c.id = o."partnerId"
-    WHERE o.type = 'delivery' AND o."companyId" = :companyId
+    WHERE o.type = 'delivery'
       AND o."deletedAt" IS NULL AND c."deletedAt" IS NULL
     GROUP BY o."companyId", c.name
     ORDER BY count(o.id) DESC
     LIMIT 1
     `,
-      {
-        replacements: { companyId },
-        type: QueryTypes.SELECT,
-      }
+      { type: QueryTypes.SELECT }
     );
 
     return results?.[0] ?? null;

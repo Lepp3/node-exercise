@@ -1,5 +1,6 @@
-import { ProductModel } from '../../models/index.js';
+import { ProductModel, sequelize } from '../../models/index.js';
 import { ProductProperties } from './product.model.js';
+import { QueryTypes } from 'sequelize';
 
 export class ProductService {
   constructor(private readonly model = ProductModel) {}
@@ -38,5 +39,25 @@ export class ProductService {
     }
 
     await product.destroy();
+  }
+
+  async getBestSellingProduct() {
+    const results = await sequelize.query(
+      `SELECT p.name AS "productName",
+         SUM(oi.quantity) AS "totalSold"
+        FROM "orderItems" oi
+        JOIN "order" o ON o.id = oi."orderId"
+        JOIN "product" p ON p.id = oi."productId"
+        WHERE o.type = 'delivery'
+          AND oi."deletedAt" IS NULL
+          AND o."deletedAt" IS NULL
+          AND p."deletedAt" IS NULL
+        GROUP BY p.name
+        ORDER BY SUM(oi.quantity) DESC
+  `,
+      { type: QueryTypes.SELECT }
+    );
+
+    return results?.[0] || null;
   }
 }
