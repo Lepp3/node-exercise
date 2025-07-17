@@ -13,6 +13,15 @@ productController.get('/best-selling', async (req: Request, res: Response) => {
   }
 });
 
+productController.get('/max-stock', async (req: Request, res: Response) => {
+  try {
+    const maxProducts = await productService.getMaxStockProduct();
+    res.status(200).json(maxProducts);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 productController.get('/', async (req: Request, res: Response) => {
   try {
     const products = await productService.getAll();

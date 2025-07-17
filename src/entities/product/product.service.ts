@@ -60,4 +60,38 @@ export class ProductService {
 
     return results?.[0] || null;
   }
+
+  async getMaxStockProduct() {
+    const results = await sequelize.query(
+      `
+    SELECT s."warehouseName",
+           MIN(s."productName") AS "name_of_product",
+           MAX(s."stockLevel") AS "max_product"
+    FROM (
+      SELECT w.name AS "warehouseName",
+             p.name AS "productName",
+             SUM(
+               CASE
+                 WHEN o.type = 'shipment' THEN oi.quantity
+                 WHEN o.type = 'delivery' THEN -oi.quantity
+                 ELSE NULL
+               END
+             ) AS "stockLevel"
+      FROM "order" o
+      JOIN "orderItems" oi ON o.id = oi."orderId"
+      JOIN "product" p ON p.id = oi."productId"
+      JOIN "warehouse" w ON o."warehouseId" = w.id
+      WHERE o."deletedAt" IS NULL
+        AND oi."deletedAt" IS NULL
+        AND p."deletedAt" IS NULL
+      GROUP BY w.name, p.name
+    ) s
+    GROUP BY s."warehouseName"
+    ORDER BY MAX(s."stockLevel") DESC
+    `,
+      { type: QueryTypes.SELECT }
+    );
+
+    return results;
+  }
 }
