@@ -4,7 +4,7 @@ import {
   PartnerTypeEnum,
 } from '../../utility/utilityTypes.js';
 
-interface PartnerProperties {
+export interface PartnerProperties {
   id: string;
   name: string;
   companyId: string;
