@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
-import { type OrderType, OrderTypeEnum } from './types/utilityTypes.js';
+import { type OrderType, OrderTypeEnum } from './utility/utilityTypes.js';
 
 interface OrderProperties {
   id: string;

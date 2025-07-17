@@ -1,5 +1,5 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
-import { type SupportType, SupportTypeEnum } from './types/utilityTypes.js';
+import { type SupportType, SupportTypeEnum } from './utility/utilityTypes.js';
 
 interface ProductProperties {
   id: string;

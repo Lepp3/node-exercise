@@ -1,13 +1,13 @@
 import { sequelize } from '../config/database.js';
 import { defineAssociations } from './relations.js';
-import UserModel from '../user.model.js';
-import CompanyModel from '../company.model.js';
+import UserModel from '../entities/user/user.model.js';
+import CompanyModel from '../entities/company/company.model.js';
 import PartnerModel from '../partner.model.js';
 import ProductModel from '../product.model.js';
-import InvoiceModel from '../invoice.model.js';
-import OrderItemsModel from '../orderItems.model.js';
+import InvoiceModel from '../entities/invoice/invoice.model.js';
+import OrderItemsModel from '../entities/orderItems/orderItems.model.js';
 import OrderModel from '../order.model.js';
-import WarehouseModel from '../warehouse.model.js';
+import WarehouseModel from '../entities/warehouse/warehouse.model.js';
 
 UserModel.initModel(sequelize);
 CompanyModel.initModel(sequelize);

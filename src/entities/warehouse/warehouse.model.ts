@@ -1,32 +1,35 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
-import { type PartnerType, PartnerTypeEnum } from './types/utilityTypes.js';
+import {
+  type SupportType,
+  SupportTypeEnum,
+} from '../../utility/utilityTypes.js';
 
-interface PartnerProperties {
+interface WarehouseProperties {
   id: string;
-  name: string;
   companyId: string;
-  type: PartnerType;
+  supportType: SupportType;
+  name: string;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
   modifiedBy: string;
 }
 
-class PartnerModel
-  extends Model<PartnerProperties, Optional<PartnerProperties, 'id'>>
-  implements PartnerProperties
+class WarehouseModel
+  extends Model<WarehouseProperties, Optional<WarehouseProperties, 'id'>>
+  implements WarehouseProperties
 {
   public id!: string;
   public companyId!: string;
-  public type!: PartnerType;
   public name!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  public supportType!: SupportType;
+  public readonly createdAt?: Date;
+  public readonly updatedAt?: Date;
   public readonly deletedAt?: Date;
   public modifiedBy!: string;
 
-  public static initModel(sequelize: Sequelize): typeof PartnerModel {
-    PartnerModel.init(
+  public static initModel(sequelize: Sequelize): typeof WarehouseModel {
+    WarehouseModel.init(
       {
         id: {
           type: DataTypes.UUID,
@@ -38,12 +41,10 @@ class PartnerModel
           allowNull: false,
           field: 'companyId',
         },
-        type: {
-          type: DataTypes.ENUM(
-            PartnerTypeEnum.Customer,
-            PartnerTypeEnum.Supplier
-          ),
+        supportType: {
+          type: DataTypes.ENUM(SupportTypeEnum.Liquid, SupportTypeEnum.Solid),
           allowNull: false,
+          field: 'supportType',
         },
         name: {
           type: DataTypes.STRING,
@@ -72,13 +73,13 @@ class PartnerModel
       },
       {
         sequelize,
-        tableName: 'partner',
+        tableName: 'warehouse',
         timestamps: true,
         paranoid: true,
       }
     );
-    return PartnerModel;
+    return WarehouseModel;
   }
 }
 
-export default PartnerModel;
+export default WarehouseModel;
