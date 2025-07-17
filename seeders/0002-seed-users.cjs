@@ -1,6 +1,16 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    const existingRecords = await queryInterface.sequelize.query(
+      'SELECT COUNT(*) as count FROM user',
+      { type: queryInterface.sequelize.QueryTypes.SELECT }
+    );
+
+    if (existingRecords[0].count > 0) {
+      console.log('User data already exists, skipping seed...');
+      return;
+    }
+
     await queryInterface.bulkInsert('user', [
       {
         id: '15cadf50-86ef-4bf6-a6cf-80b715fd466f',

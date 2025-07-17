@@ -1,6 +1,16 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    const existingRecords = await queryInterface.sequelize.query(
+      'SELECT COUNT(*) as count FROM invoice',
+      { type: queryInterface.sequelize.QueryTypes.SELECT }
+    );
+
+    if (existingRecords[0].count > 0) {
+      console.log('Invoices data already exists, skipping seed...');
+      return;
+    }
+
     await queryInterface.bulkInsert('invoice', [
       {
         id: 'fea14dfb-e421-48f6-958c-b1f19dafc382',

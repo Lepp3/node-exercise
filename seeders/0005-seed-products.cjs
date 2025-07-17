@@ -1,6 +1,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    const existingRecords = await queryInterface.sequelize.query(
+      'SELECT COUNT(*) as count FROM product',
+      { type: queryInterface.sequelize.QueryTypes.SELECT }
+    );
+
+    if (existingRecords[0].count > 0) {
+      console.log('Product data already exists, skipping seed...');
+      return;
+    }
     await queryInterface.bulkInsert('product', [
       {
         id: 'b8b36077-d254-43d9-b74d-76ef8e32b1e8',
