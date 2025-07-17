@@ -4,19 +4,19 @@ import { CompanyProperties } from './company.model.js';
 export class CompanyService {
   constructor(private readonly model = CompanyModel) {}
 
-  async getAllCompanies(): Promise<CompanyModel[]> {
+  async getAll(): Promise<CompanyModel[]> {
     return await this.model.findAll();
   }
 
-  async getCompanyById(companyId: string): Promise<CompanyModel | null> {
+  async getById(companyId: string): Promise<CompanyModel | null> {
     return await this.model.findByPk(companyId);
   }
 
-  async createCompany(companyData: CompanyProperties): Promise<CompanyModel> {
+  async create(companyData: CompanyProperties): Promise<CompanyModel> {
     return await this.model.create(companyData);
   }
 
-  async updateCompany(
+  async update(
     companyId: string,
     companyData: CompanyProperties
   ): Promise<CompanyModel> {
@@ -36,7 +36,7 @@ export class CompanyService {
     return updated;
   }
 
-  async deleteCompany(companyId: string): Promise<void> {
+  async delete(companyId: string): Promise<void> {
     const company = await this.model.findByPk(companyId, { paranoid: false });
 
     if (!company) {

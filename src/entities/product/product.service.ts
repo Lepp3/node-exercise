@@ -4,19 +4,19 @@ import { ProductProperties } from './product.model.js';
 export class ProductService {
   constructor(private readonly model = ProductModel) {}
 
-  async getAllProducts(): Promise<ProductModel[]> {
+  async getAll(): Promise<ProductModel[]> {
     return await this.model.findAll();
   }
 
-  async getProductById(id: string): Promise<ProductModel | null> {
+  async getById(id: string): Promise<ProductModel | null> {
     return await this.model.findByPk(id);
   }
 
-  async createProduct(data: ProductProperties): Promise<ProductModel> {
+  async create(data: ProductProperties): Promise<ProductModel> {
     return await this.model.create(data);
   }
 
-  async updateProduct(
+  async update(
     productId: string,
     data: ProductProperties
   ): Promise<ProductModel> {
@@ -31,7 +31,7 @@ export class ProductService {
     return updated;
   }
 
-  async deleteProduct(productId: string): Promise<void> {
+  async delete(productId: string): Promise<void> {
     const product = await this.model.findByPk(productId, { paranoid: false });
     if (!product) {
       throw new Error(`Product with ID ${productId} does not exist`);

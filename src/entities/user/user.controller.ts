@@ -6,7 +6,7 @@ const userService = new UserService();
 
 userController.get('/', async (req: Request, res: Response) => {
   try {
-    const users = await userService.getAllUsers();
+    const users = await userService.getAll();
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json(error);
@@ -16,7 +16,7 @@ userController.get('/', async (req: Request, res: Response) => {
 userController.get('/:id', async (req: Request, res: Response) => {
   const userId = req.params.id;
   try {
-    const user = await userService.getUserById(userId);
+    const user = await userService.getById(userId);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -29,7 +29,7 @@ userController.get('/:id', async (req: Request, res: Response) => {
 userController.post('/', async (req: Request, res: Response) => {
   const newUserInfo = req.body;
   try {
-    const newUser = await userService.createUser(newUserInfo);
+    const newUser = await userService.create(newUserInfo);
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json(error);
@@ -40,7 +40,7 @@ userController.put('/:id', async (req: Request, res: Response) => {
   const userId = req.params.id;
   const updatedInfo = req.body;
   try {
-    const updatedUser = await userService.updateUser(userId, updatedInfo);
+    const updatedUser = await userService.update(userId, updatedInfo);
     res.status(200).json(updatedUser);
   } catch (error) {
     res.status(500).json(error);
@@ -50,7 +50,7 @@ userController.put('/:id', async (req: Request, res: Response) => {
 userController.delete('/:id', async (req: Request, res: Response) => {
   const userId = req.params.id;
   try {
-    await userService.deleteUser(userId);
+    await userService.delete(userId);
     res.status(204).send();
   } catch (error) {
     res.status(500).json(error);

@@ -4,22 +4,19 @@ import { UserProperties } from './user.model.js';
 export class UserService {
   constructor(private readonly model = UserModel) {}
 
-  async getAllUsers(): Promise<UserModel[]> {
+  async getAll(): Promise<UserModel[]> {
     return await this.model.findAll();
   }
 
-  async getUserById(id: string): Promise<UserModel | null> {
+  async getById(id: string): Promise<UserModel | null> {
     return await this.model.findByPk(id);
   }
 
-  async createUser(userData: UserProperties): Promise<UserModel | null> {
+  async create(userData: UserProperties): Promise<UserModel | null> {
     return await this.model.create(userData);
   }
 
-  async updateUser(
-    userId: string,
-    userData: UserProperties
-  ): Promise<UserModel> {
+  async update(userId: string, userData: UserProperties): Promise<UserModel> {
     const [count] = await this.model.update(userData, {
       where: { id: userId },
     });
@@ -33,7 +30,7 @@ export class UserService {
     return updated;
   }
 
-  async deleteUser(id: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     const user = await this.model.findByPk(id, { paranoid: false });
     if (!user) {
       throw new Error(`User with ID ${id} does not exist`);
