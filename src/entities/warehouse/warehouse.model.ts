@@ -15,19 +15,10 @@ export interface WarehouseProperties {
   modifiedBy: string;
 }
 
-class WarehouseModel
-  extends Model<WarehouseProperties, Optional<WarehouseProperties, 'id'>>
-  implements WarehouseProperties
-{
-  public id!: string;
-  public companyId!: string;
-  public name!: string;
-  public supportType!: SupportType;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
-  public readonly deletedAt?: Date;
-  public modifiedBy!: string;
-
+class WarehouseModel extends Model<
+  WarehouseProperties,
+  Optional<WarehouseProperties, 'id'>
+> {
   public static initModel(sequelize: Sequelize): typeof WarehouseModel {
     WarehouseModel.init(
       {
@@ -35,6 +26,7 @@ class WarehouseModel
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           allowNull: false,
+          primaryKey: true,
         },
         companyId: {
           type: DataTypes.UUID,

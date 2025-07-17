@@ -1,7 +1,7 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 import { type OrderType, OrderTypeEnum } from '../../utility/utilityTypes.js';
 
-interface OrderProperties {
+export interface OrderProperties {
   id: string;
   warehouseId: string;
   partnerId: string;
@@ -14,21 +14,10 @@ interface OrderProperties {
   modifiedBy: string;
 }
 
-class OrderModel
-  extends Model<OrderProperties, Optional<OrderProperties, 'id'>>
-  implements OrderProperties
-{
-  public id!: string;
-  public warehouseId!: string;
-  public companyId!: string;
-  public type!: OrderType;
-  public date!: Date;
-  public partnerId!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
-  public readonly deletedAt?: Date;
-  public modifiedBy!: string;
-
+class OrderModel extends Model<
+  OrderProperties,
+  Optional<OrderProperties, 'id'>
+> {
   public static initModel(sequelize: Sequelize): typeof OrderModel {
     OrderModel.init(
       {

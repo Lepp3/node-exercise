@@ -15,19 +15,10 @@ export interface ProductProperties {
   modifiedBy: string;
 }
 
-class ProductModel
-  extends Model<ProductProperties, Optional<ProductProperties, 'id'>>
-  implements ProductProperties
-{
-  public id!: string;
-  public companyId!: string;
-  public name!: string;
-  public type!: SupportType;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
-  public readonly deletedAt?: Date;
-  public modifiedBy!: string;
-
+class ProductModel extends Model<
+  ProductProperties,
+  Optional<ProductProperties, 'id'>
+> {
   public static initModel(sequelize: Sequelize): typeof ProductModel {
     ProductModel.init(
       {
@@ -35,6 +26,7 @@ class ProductModel
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           allowNull: false,
+          primaryKey: true,
         },
         companyId: {
           type: DataTypes.UUID,

@@ -11,19 +11,10 @@ export interface OrderItemsProperties {
   modifiedBy: string;
 }
 
-class OrderItemsModel
-  extends Model<OrderItemsProperties, Optional<OrderItemsProperties, 'id'>>
-  implements OrderItemsProperties
-{
-  public id!: string;
-  public productId!: string;
-  public quantity!: number;
-  public orderId!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
-  public readonly deletedAt?: Date;
-  public modifiedBy!: string;
-
+class OrderItemsModel extends Model<
+  OrderItemsProperties,
+  Optional<OrderItemsProperties, 'id'>
+> {
   public static initModel(sequelize: Sequelize): typeof OrderItemsModel {
     OrderItemsModel.init(
       {
@@ -31,6 +22,7 @@ class OrderItemsModel
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           allowNull: false,
+          primaryKey: true,
         },
         productId: {
           type: DataTypes.UUID,

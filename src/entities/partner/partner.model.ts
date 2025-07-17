@@ -15,19 +15,10 @@ export interface PartnerProperties {
   modifiedBy: string;
 }
 
-class PartnerModel
-  extends Model<PartnerProperties, Optional<PartnerProperties, 'id'>>
-  implements PartnerProperties
-{
-  public id!: string;
-  public companyId!: string;
-  public type!: PartnerType;
-  public name!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
-  public readonly deletedAt?: Date;
-  public modifiedBy!: string;
-
+class PartnerModel extends Model<
+  PartnerProperties,
+  Optional<PartnerProperties, 'id'>
+> {
   public static initModel(sequelize: Sequelize): typeof PartnerModel {
     PartnerModel.init(
       {
@@ -35,6 +26,7 @@ class PartnerModel
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           allowNull: false,
+          primaryKey: true,
         },
         companyId: {
           type: DataTypes.UUID,

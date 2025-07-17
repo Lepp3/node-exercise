@@ -10,18 +10,10 @@ export interface InvoiceProperties {
   modifiedBy: string;
 }
 
-class InvoiceModel
-  extends Model<InvoiceProperties, Optional<InvoiceProperties, 'id'>>
-  implements InvoiceProperties
-{
-  public id!: string;
-  public date!: Date;
-  public orderId!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
-  public readonly deletedAt?: Date;
-  public modifiedBy!: string;
-
+class InvoiceModel extends Model<
+  InvoiceProperties,
+  Optional<InvoiceProperties, 'id'>
+> {
   public static initModel(sequelize: Sequelize): typeof InvoiceModel {
     InvoiceModel.init(
       {
@@ -29,6 +21,7 @@ class InvoiceModel
           type: DataTypes.UUID,
           defaultValue: DataTypes.UUIDV4,
           allowNull: false,
+          primaryKey: true,
         },
         orderId: {
           type: DataTypes.UUID,

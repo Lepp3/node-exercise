@@ -18,14 +18,11 @@ app.use('/api', apiRouter);
   try {
     await sequelize.authenticate();
     console.log('Database connection has been established successfully.');
-
-    // await sequelize.sync();
+    app.listen(PORT, () => {
+      console.log(`Server is running on http://localhost:${PORT}`);
+    });
   } catch (error) {
     console.error('Unable to connect to the database:', error);
     process.exit(1);
   }
 })();
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});

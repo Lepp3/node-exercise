@@ -13,21 +13,7 @@ export interface UserProperties {
   modifiedBy: string;
 }
 
-class UserModel
-  extends Model<UserProperties, Optional<UserProperties, 'id'>>
-  implements UserProperties
-{
-  public id!: string;
-  public name!: string;
-  public companyId!: string;
-  public username!: string;
-  public password!: string;
-  public email!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
-  public readonly deletedAt?: Date;
-  public modifiedBy!: string;
-
+class UserModel extends Model<UserProperties, Optional<UserProperties, 'id'>> {
   public static initModel(sequelize: Sequelize): typeof UserModel {
     UserModel.init(
       {

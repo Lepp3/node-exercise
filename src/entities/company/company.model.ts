@@ -9,17 +9,10 @@ export interface CompanyProperties {
   modifiedBy: string;
 }
 
-class CompanyModel
-  extends Model<CompanyProperties, Optional<CompanyProperties, 'id'>>
-  implements CompanyProperties
-{
-  public id!: string;
-  public name!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
-  public readonly deletedAt?: Date;
-  public modifiedBy!: string;
-
+class CompanyModel extends Model<
+  CompanyProperties,
+  Optional<CompanyProperties, 'id'>
+> {
   public static initModel(sequelize: Sequelize): typeof CompanyModel {
     CompanyModel.init(
       {
