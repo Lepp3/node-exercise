@@ -1,5 +1,5 @@
-import { PartnerModel, sequelize } from '../../models/index.js';
-import { PartnerProperties } from './partner.model.js';
+import { sequelize } from '../../config/database.js';
+import { PartnerProperties, PartnerModel } from './partner.model.js';
 import { QueryTypes } from 'sequelize';
 
 export class PartnerService {

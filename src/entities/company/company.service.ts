@@ -1,5 +1,4 @@
-import { CompanyModel } from '../../models/index.js';
-import { CompanyProperties } from './company.model.js';
+import { CompanyProperties, CompanyModel } from './company.model.js';
 
 export class CompanyService {
   constructor(private readonly model = CompanyModel) {}

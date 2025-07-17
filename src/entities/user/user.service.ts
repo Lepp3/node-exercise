@@ -1,5 +1,4 @@
-import { UserModel } from '../../models/index.js';
-import { UserProperties } from './user.model.js';
+import { UserProperties, UserModel } from './user.model.js';
 
 export class UserService {
   constructor(private readonly model = UserModel) {}

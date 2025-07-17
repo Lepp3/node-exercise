@@ -1,5 +1,5 @@
-import { ProductModel, sequelize } from '../../models/index.js';
-import { ProductProperties } from './product.model.js';
+import { sequelize } from '../../config/database.js';
+import { ProductProperties, ProductModel } from './product.model.js';
 import { QueryTypes } from 'sequelize';
 
 export class ProductService {

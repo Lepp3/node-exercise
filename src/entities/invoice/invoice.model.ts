@@ -10,7 +10,7 @@ export interface InvoiceProperties {
   modifiedBy: string;
 }
 
-class InvoiceModel extends Model<
+export class InvoiceModel extends Model<
   InvoiceProperties,
   Optional<InvoiceProperties, 'id'>
 > {

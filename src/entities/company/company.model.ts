@@ -9,7 +9,7 @@ export interface CompanyProperties {
   modifiedBy: string;
 }
 
-class CompanyModel extends Model<
+export class CompanyModel extends Model<
   CompanyProperties,
   Optional<CompanyProperties, 'id'>
 > {

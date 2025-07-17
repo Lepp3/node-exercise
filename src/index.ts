@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { sequelize } from './config/database.js';
+import { sequelize, DbManager } from './config/database.js';
 import { config } from 'dotenv';
 import apiRouter from './routes/index.js';
 
@@ -16,8 +16,11 @@ app.use('/api', apiRouter);
 
 (async () => {
   try {
+    const dbManager = DbManager.getInstance();
     await sequelize.authenticate();
     console.log('Database connection has been established successfully.');
+    dbManager.initModels();
+    dbManager.defineRelations();
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
     });

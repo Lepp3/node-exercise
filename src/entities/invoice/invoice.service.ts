@@ -1,5 +1,4 @@
-import { InvoiceModel } from '../../models/index.js';
-import { InvoiceProperties } from './invoice.model.js';
+import { InvoiceProperties, InvoiceModel } from './invoice.model.js';
 
 export class InvoiceService {
   constructor(private readonly model = InvoiceModel) {}

@@ -15,7 +15,7 @@ export interface WarehouseProperties {
   modifiedBy: string;
 }
 
-class WarehouseModel extends Model<
+export class WarehouseModel extends Model<
   WarehouseProperties,
   Optional<WarehouseProperties, 'id'>
 > {

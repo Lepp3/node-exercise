@@ -13,7 +13,10 @@ export interface UserProperties {
   modifiedBy: string;
 }
 
-class UserModel extends Model<UserProperties, Optional<UserProperties, 'id'>> {
+export class UserModel extends Model<
+  UserProperties,
+  Optional<UserProperties, 'id'>
+> {
   public static initModel(sequelize: Sequelize): typeof UserModel {
     UserModel.init(
       {

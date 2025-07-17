@@ -11,7 +11,7 @@ export interface OrderItemsProperties {
   modifiedBy: string;
 }
 
-class OrderItemsModel extends Model<
+export class OrderItemsModel extends Model<
   OrderItemsProperties,
   Optional<OrderItemsProperties, 'id'>
 > {

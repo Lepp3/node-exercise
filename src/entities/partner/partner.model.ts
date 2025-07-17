@@ -15,7 +15,7 @@ export interface PartnerProperties {
   modifiedBy: string;
 }
 
-class PartnerModel extends Model<
+export class PartnerModel extends Model<
   PartnerProperties,
   Optional<PartnerProperties, 'id'>
 > {

@@ -15,7 +15,7 @@ export interface ProductProperties {
   modifiedBy: string;
 }
 
-class ProductModel extends Model<
+export class ProductModel extends Model<
   ProductProperties,
   Optional<ProductProperties, 'id'>
 > {

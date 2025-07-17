@@ -1,5 +1,4 @@
-import { WarehouseModel } from '../../models/index.js';
-import { WarehouseProperties } from './warehouse.model.js';
+import { WarehouseProperties, WarehouseModel } from './warehouse.model.js';
 
 export class WarehouseService {
   constructor(private readonly model = WarehouseModel) {}

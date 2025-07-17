@@ -1,5 +1,4 @@
-import { OrderItemsModel } from '../../models/index.js';
-import { OrderItemsProperties } from './orderItems.model.js';
+import { OrderItemsProperties, OrderItemsModel } from './orderItems.model.js';
 
 export class OrderItemsService {
   constructor(private readonly model = OrderItemsModel) {}
