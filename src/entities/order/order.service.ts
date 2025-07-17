@@ -34,13 +34,11 @@ export class OrderService {
   }
 
   async delete(orderId: string): Promise<void> {
-    const order = await this.model.findByPk(orderId, { paranoid: false });
+    const order = await this.model.findByPk(orderId);
     if (!order) {
       throw new Error(`Order with ID ${orderId} does not exist`);
     }
-    if (order.deletedAt) {
-      throw new Error(`Order with ID ${orderId} is already deleted`);
-    }
+
     await order.destroy();
   }
 }

@@ -32,13 +32,11 @@ export class InvoiceService {
   }
 
   async delete(invoiceId: string): Promise<void> {
-    const invoice = await this.model.findByPk(invoiceId, { paranoid: false });
+    const invoice = await this.model.findByPk(invoiceId);
     if (!invoice) {
       throw new Error(`Invoice with ID ${invoiceId} does not exist`);
     }
-    if (invoice.deletedAt) {
-      throw new Error(`Invoice with ID ${invoiceId} is already deleted`);
-    }
+
     await invoice.destroy();
   }
 }

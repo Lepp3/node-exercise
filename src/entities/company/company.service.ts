@@ -37,14 +37,10 @@ export class CompanyService {
   }
 
   async delete(companyId: string): Promise<void> {
-    const company = await this.model.findByPk(companyId, { paranoid: false });
+    const company = await this.model.findByPk(companyId);
 
     if (!company) {
       throw new Error(`Company with ID ${companyId} does not exist`);
-    }
-
-    if (company.deletedAt) {
-      throw new Error(`Company with ID ${companyId} is already deleted`);
     }
 
     await company.destroy();

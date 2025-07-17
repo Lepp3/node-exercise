@@ -33,15 +33,11 @@ export class WarehouseService {
   }
 
   async delete(warehouseId: string): Promise<void> {
-    const warehouse = await this.model.findByPk(warehouseId, {
-      paranoid: false,
-    });
+    const warehouse = await this.model.findByPk(warehouseId);
     if (!warehouse) {
       throw new Error(`Warehouse with ID ${warehouseId} does not exist`);
     }
-    if (warehouse.deletedAt) {
-      throw new Error(`Warehouse with ID ${warehouseId} is already deleted`);
-    }
+
     await warehouse.destroy();
   }
 }

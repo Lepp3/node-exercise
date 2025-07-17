@@ -32,13 +32,11 @@ export class ProductService {
   }
 
   async delete(productId: string): Promise<void> {
-    const product = await this.model.findByPk(productId, { paranoid: false });
+    const product = await this.model.findByPk(productId);
     if (!product) {
       throw new Error(`Product with ID ${productId} does not exist`);
     }
-    if (product.deletedAt) {
-      throw new Error(`Product with ID ${productId} is already deleted`);
-    }
+
     await product.destroy();
   }
 }

@@ -30,14 +30,12 @@ export class UserService {
     return updated;
   }
 
-  async delete(id: string): Promise<void> {
-    const user = await this.model.findByPk(id, { paranoid: false });
+  async delete(userId: string): Promise<void> {
+    const user = await this.model.findByPk(userId);
     if (!user) {
-      throw new Error(`User with ID ${id} does not exist`);
+      throw new Error(`User with ID ${userId} does not exist`);
     }
-    if (user.deletedAt) {
-      throw new Error(`User with ID ${id} is already deleted`);
-    }
+
     await user.destroy();
   }
 }

@@ -34,13 +34,11 @@ export class PartnerService {
   }
 
   async delete(partnerId: string): Promise<void> {
-    const partner = await this.model.findByPk(partnerId, { paranoid: false });
+    const partner = await this.model.findByPk(partnerId);
     if (!partner) {
       throw new Error(`Partner with ID ${partnerId} does not exist`);
     }
-    if (partner.deletedAt) {
-      throw new Error(`Partner with ID ${partnerId} is already deleted`);
-    }
+
     await partner.destroy();
   }
 }
