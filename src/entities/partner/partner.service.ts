@@ -1,5 +1,6 @@
-import { PartnerModel } from '../../models/index.js';
+import { PartnerModel, sequelize } from '../../models/index.js';
 import { PartnerProperties } from './partner.model.js';
+import { QueryTypes } from 'sequelize';
 
 export class PartnerService {
   constructor(private readonly model = PartnerModel) {}
@@ -40,5 +41,28 @@ export class PartnerService {
     }
 
     await partner.destroy();
+  }
+
+  async getLoyalCustomer(companyId: string) {
+    const results = await sequelize.query(
+      `
+    SELECT o."companyId",
+           c.name AS "customerName",
+           count(o.id) AS "totalOrders"
+    FROM "order" o
+    JOIN partner c ON c.id = o."partnerId"
+    WHERE o.type = 'delivery' AND o."companyId" = :companyId
+      AND o."deletedAt" IS NULL AND c."deletedAt" IS NULL
+    GROUP BY o."companyId", c.name
+    ORDER BY count(o.id) DESC
+    LIMIT 1
+    `,
+      {
+        replacements: { companyId },
+        type: QueryTypes.SELECT,
+      }
+    );
+
+    return results?.[0] ?? null;
   }
 }
