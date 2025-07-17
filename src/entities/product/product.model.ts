@@ -4,7 +4,7 @@ import {
   SupportTypeEnum,
 } from '../../utility/utilityTypes.js';
 
-interface ProductProperties {
+export interface ProductProperties {
   id: string;
   companyId: string;
   type: SupportType;

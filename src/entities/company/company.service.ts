@@ -1,5 +1,5 @@
 import { CompanyModel } from '../../models/index.js';
-import { type CompanyProps } from './company.types.js';
+import { CompanyProperties } from './company.model.js';
 
 export class CompanyService {
   constructor(private readonly model = CompanyModel) {}
@@ -12,13 +12,13 @@ export class CompanyService {
     return await this.model.findByPk(companyId);
   }
 
-  async createCompany(companyData: CompanyProps): Promise<CompanyModel> {
+  async createCompany(companyData: CompanyProperties): Promise<CompanyModel> {
     return await this.model.create(companyData);
   }
 
   async updateCompany(
     companyId: string,
-    companyData: CompanyProps
+    companyData: CompanyProperties
   ): Promise<CompanyModel> {
     const [updatedCount] = await this.model.update(companyData, {
       where: { id: companyId },

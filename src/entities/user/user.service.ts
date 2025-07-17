@@ -1,5 +1,5 @@
 import { UserModel } from '../../models/index.js';
-import { type UserProps } from './user.types.js';
+import { UserProperties } from './user.model.js';
 
 export class UserService {
   constructor(private readonly model = UserModel) {}
@@ -12,23 +12,35 @@ export class UserService {
     return await this.model.findByPk(id);
   }
 
-  async createUser(userData: UserProps): Promise<UserModel | null> {
+  async createUser(userData: UserProperties): Promise<UserModel | null> {
     return await this.model.create(userData);
   }
 
-  async updateUser(id: string, userData: UserProps): Promise<UserModel> {
-    const [count] = await this.model.update(userData, { where: { id } });
-    if (count === 0) throw new Error(`User with id ${id} not found`);
-    const updated = await this.model.findByPk(id);
-    if (!updated) throw new Error(`User fetch failed after update`);
+  async updateUser(
+    userId: string,
+    userData: UserProperties
+  ): Promise<UserModel> {
+    const [count] = await this.model.update(userData, {
+      where: { id: userId },
+    });
+    if (count === 0) {
+      throw new Error(`User with id ${userId} not found`);
+    }
+    const updated = await this.model.findByPk(userId);
+    if (!updated) {
+      throw new Error(`User fetch failed after update`);
+    }
     return updated;
   }
 
   async deleteUser(id: string): Promise<void> {
-    const entity = await this.model.findByPk(id, { paranoid: false });
-    if (!entity) throw new Error(`User with ID ${id} does not exist`);
-    if (entity.deletedAt)
+    const user = await this.model.findByPk(id, { paranoid: false });
+    if (!user) {
+      throw new Error(`User with ID ${id} does not exist`);
+    }
+    if (user.deletedAt) {
       throw new Error(`User with ID ${id} is already deleted`);
-    await entity.destroy();
+    }
+    await user.destroy();
   }
 }

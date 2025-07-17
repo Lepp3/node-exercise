@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
-interface CompanyProperties {
+export interface CompanyProperties {
   id: string;
   name: string;
   createdAt?: Date;
