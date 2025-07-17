@@ -4,7 +4,7 @@ import {
   SupportTypeEnum,
 } from '../../utility/utilityTypes.js';
 
-interface WarehouseProperties {
+export interface WarehouseProperties {
   id: string;
   companyId: string;
   supportType: SupportType;
