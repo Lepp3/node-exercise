@@ -24,9 +24,6 @@ warehouseController.get(
     const warehouseId = req.params.id;
     try {
       const warehouse = await warehouseService.getById(warehouseId);
-      if (!warehouse) {
-        return res.status(404).json({ message: 'Warehouse not found' });
-      }
       res.status(200).json(warehouse);
     } catch (error) {
       next(error);

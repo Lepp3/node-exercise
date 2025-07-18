@@ -24,9 +24,6 @@ orderItemsController.get(
     const itemId = req.params.id;
     try {
       const item = await orderItemsService.getById(itemId);
-      if (!item) {
-        return res.status(404).json({ message: 'Order item not found' });
-      }
       res.status(200).json(item);
     } catch (error) {
       next(error);
