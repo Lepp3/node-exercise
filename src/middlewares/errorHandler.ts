@@ -7,8 +7,9 @@ export const errorHandler = (
   err: Error | AppError | ZodError,
   req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ): void => {
+  console.log(err);
   if (err instanceof ZodError) {
     res.status(400).json({ status: 'Validation error' });
     return;

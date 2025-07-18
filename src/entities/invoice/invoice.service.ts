@@ -21,6 +21,7 @@ export class InvoiceService {
   }
 
   async create(invoiceData: InvoiceProperties): Promise<InvoiceModel> {
+    console.log(invoiceData);
     const createdInvoice = await this.model.create(invoiceData);
     if (!createdInvoice) {
       throw new AppError('Internal Server Error');

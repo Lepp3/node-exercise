@@ -8,7 +8,7 @@ const invoiceService = new InvoiceService();
 
 invoiceController.get(
   '/',
-  async (req: Request, res: Response, next: NextFunction) => {
+  async (_req: Request, res: Response, next: NextFunction) => {
     try {
       const invoices = await invoiceService.getAll();
       res.status(200).json(invoices);
@@ -36,7 +36,6 @@ invoiceController.get(
 
 invoiceController.post(
   '/',
-  validateBody(invoiceSchema),
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const newInvoice = await invoiceService.create(req.body);

@@ -24,9 +24,9 @@ userController.get(
     const userId = req.params.id;
     try {
       const user = await userService.getById(userId);
-      return res.status(200).json(user);
+      res.status(200).json(user);
     } catch (error) {
-      return next(error);
+      next(error);
     }
   }
 );

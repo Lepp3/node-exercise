@@ -2,7 +2,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     const existingRecords = await queryInterface.sequelize.query(
-      'SELECT COUNT(*) as count FROM user',
+      'SELECT COUNT(*) as count FROM "user"',
       { type: queryInterface.sequelize.QueryTypes.SELECT }
     );
 

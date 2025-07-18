@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
 export const invoiceSchema = z.object({
-  date: z.coerce.date(),
+  companyId: z.uuid(),
   orderId: z.uuid(),
+  date: z.date(),
   modifiedBy: z.uuid(),
 });

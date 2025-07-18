@@ -1,5 +1,3 @@
-'use strict';
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -34,7 +32,6 @@ module.exports = {
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        field: 'companyId',
       },
       modifiedBy: {
         type: Sequelize.UUID,
@@ -48,18 +45,15 @@ module.exports = {
       createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now'),
-        field: 'createdAt',
       },
       updatedAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now'),
-        field: 'updatedAt',
       },
       deletedAt: {
         type: Sequelize.DATE,
         allowNull: true,
         defaultValue: null,
-        field: 'deletedAt',
       },
     });
   },

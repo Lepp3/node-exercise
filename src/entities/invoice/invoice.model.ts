@@ -2,7 +2,7 @@ import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
 
 export interface InvoiceProperties {
   id: string;
-  date: Date;
+  companyId: string;
   orderId: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -23,14 +23,15 @@ export class InvoiceModel extends Model<
           allowNull: false,
           primaryKey: true,
         },
+        companyId: {
+          type: DataTypes.UUID,
+          allowNull: false,
+          field: 'companyId',
+        },
         orderId: {
           type: DataTypes.UUID,
           allowNull: false,
           field: 'orderId',
-        },
-        date: {
-          type: DataTypes.DATE,
-          allowNull: false,
         },
         createdAt: {
           type: DataTypes.DATE,

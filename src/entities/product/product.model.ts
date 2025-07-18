@@ -9,6 +9,7 @@ export interface ProductProperties {
   companyId: string;
   type: SupportType;
   name: string;
+  price: number;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -32,6 +33,11 @@ export class ProductModel extends Model<
           type: DataTypes.UUID,
           allowNull: false,
           field: 'companyId',
+        },
+        price: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          field: 'price',
         },
         type: {
           type: DataTypes.ENUM(SupportTypeEnum.Liquid, SupportTypeEnum.Solid),
