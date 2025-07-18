@@ -1,4 +1,5 @@
 import { OrderProperties, OrderModel } from './order.model.js';
+import { AppError } from '../../utility/appError.js';
 
 export class OrderService {
   constructor(private readonly model = OrderModel) {}
@@ -8,11 +9,21 @@ export class OrderService {
   }
 
   async getById(orderId: string): Promise<OrderModel | null> {
-    return await this.model.findByPk(orderId);
+    const order = await this.model.findByPk(orderId);
+    if (!order) {
+      throw new AppError('Internal Server Error');
+    }
+    return order;
   }
 
   async create(orderData: OrderProperties): Promise<OrderModel> {
-    return await this.model.create(orderData);
+    const createdOrder = await this.model.create(orderData);
+
+    if (!createdOrder) {
+      throw new AppError('Internal Server Error');
+    }
+
+    return createdOrder;
   }
 
   async update(
@@ -23,21 +34,25 @@ export class OrderService {
       where: { id: orderId },
     });
     if (count === 0) {
-      throw new Error(`Order with id ${orderId} not found`);
+      throw new AppError(`Order with id ${orderId} not found`);
     }
     const updated = await this.model.findByPk(orderId);
     if (!updated) {
-      throw new Error(`Order fetch failed after update`);
+      throw new AppError(`Internal Server Error`);
     }
     return updated;
   }
 
-  async delete(orderId: string): Promise<void> {
+  async delete(orderId: string): Promise<any> {
     const order = await this.model.findByPk(orderId);
     if (!order) {
-      throw new Error(`Order with ID ${orderId} does not exist`);
+      throw new AppError(`Order with ID ${orderId} does not exist`);
     }
 
-    await order.destroy();
+    try {
+      await order.destroy();
+    } catch (err) {
+      throw new AppError(`Failed to delete order ${orderId}`);
+    }
   }
 }

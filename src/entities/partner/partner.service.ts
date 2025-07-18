@@ -1,20 +1,35 @@
 import { sequelize } from '../../config/database.js';
 import { PartnerProperties, PartnerModel } from './partner.model.js';
 import { QueryTypes } from 'sequelize';
+import { AppError } from '../../utility/appError.js';
 
 export class PartnerService {
   constructor(private readonly model = PartnerModel) {}
 
   async getAll(): Promise<PartnerModel[]> {
-    return await this.model.findAll();
+    const partners = await this.model.findAll();
+    if (!partners) {
+      throw new AppError('Internal Server Error');
+    }
+
+    return partners;
   }
 
   async getById(partnerId: string): Promise<PartnerModel | null> {
-    return await this.model.findByPk(partnerId);
+    const partner = await this.model.findByPk(partnerId);
+    if (!partner) {
+      throw new AppError('Internal Server Error');
+    }
+    return partner;
   }
 
   async create(partnerData: PartnerProperties): Promise<PartnerModel> {
-    return await this.model.create(partnerData);
+    const createdPartner = await this.model.create(partnerData);
+    if (!createdPartner) {
+      throw new AppError('Internal Server Error');
+    }
+
+    return createdPartner;
   }
 
   async update(
@@ -25,11 +40,11 @@ export class PartnerService {
       where: { id: partnerId },
     });
     if (count === 0) {
-      throw new Error(`Partner with id ${partnerId} not found`);
+      throw new AppError(`Partner with id ${partnerId} not found`);
     }
     const updated = await this.model.findByPk(partnerId);
     if (!updated) {
-      throw new Error(`Partner fetch failed after update`);
+      throw new AppError(`Partner fetch failed after update`);
     }
     return updated;
   }
@@ -37,10 +52,13 @@ export class PartnerService {
   async delete(partnerId: string): Promise<void> {
     const partner = await this.model.findByPk(partnerId);
     if (!partner) {
-      throw new Error(`Partner with ID ${partnerId} does not exist`);
+      throw new AppError(`Partner with ID ${partnerId} does not exist`);
     }
-
-    await partner.destroy();
+    try {
+      await partner.destroy();
+    } catch (error) {
+      throw new AppError('Internal Server Error');
+    }
   }
 
   async getLoyalCustomer() {
@@ -59,6 +77,10 @@ export class PartnerService {
     `,
       { type: QueryTypes.SELECT }
     );
+
+    if (!results) {
+      throw new AppError('Internal Server Error');
+    }
 
     return results?.[0] ?? null;
   }

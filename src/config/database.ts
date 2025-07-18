@@ -38,7 +38,6 @@ export class DbManager {
   }
 
   public initModels(): void {
-    console.log('initiating models');
     UserModel.initModel(sequelize);
     CompanyModel.initModel(sequelize);
     ProductModel.initModel(sequelize);
@@ -47,11 +46,9 @@ export class DbManager {
     OrderModel.initModel(sequelize);
     OrderItemsModel.initModel(sequelize);
     InvoiceModel.initModel(sequelize);
-    console.log('finished initializing models');
   }
 
   public defineRelations(): void {
-    console.log('Defining relations...');
     UserModel.belongsTo(CompanyModel, {
       foreignKey: 'companyId',
       as: 'company',
@@ -221,7 +218,5 @@ export class DbManager {
       foreignKey: 'productId',
       as: 'product',
     });
-
-    console.log('finished defining relations');
   }
 }

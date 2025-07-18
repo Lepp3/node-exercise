@@ -3,6 +3,7 @@ import cors from 'cors';
 import { sequelize, DbManager } from './config/database.js';
 import { config } from 'dotenv';
 import apiRouter from './routes/index.js';
+import { errorHandler } from './middlewares/errorHandler.js';
 
 config();
 
@@ -13,6 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use('/api', apiRouter);
+app.use(errorHandler);
 
 (async () => {
   try {
@@ -29,3 +31,5 @@ app.use('/api', apiRouter);
     process.exit(1);
   }
 })();
+
+export default app;

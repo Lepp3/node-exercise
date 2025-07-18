@@ -1,18 +1,31 @@
 import { OrderItemsProperties, OrderItemsModel } from './orderItems.model.js';
+import { AppError } from '../../utility/appError.js';
 
 export class OrderItemsService {
   constructor(private readonly model = OrderItemsModel) {}
 
   async getAll(): Promise<OrderItemsModel[]> {
-    return await this.model.findAll();
+    const orderItems = await this.model.findAll();
+    if (!orderItems) {
+      throw new AppError('Internal Server Error');
+    }
+    return orderItems;
   }
 
   async getById(orderItemId: string): Promise<OrderItemsModel | null> {
-    return await this.model.findByPk(orderItemId);
+    const orderItems = await this.model.findByPk(orderItemId);
+    if (!orderItems) {
+      throw new AppError('Internal Server Error');
+    }
+    return orderItems;
   }
 
   async create(orderItemData: OrderItemsProperties): Promise<OrderItemsModel> {
-    return await this.model.create(orderItemData);
+    const createdItems = await this.model.create(orderItemData);
+    if (!createdItems) {
+      throw new AppError('Internal Server Error');
+    }
+    return createdItems;
   }
 
   async update(
@@ -24,12 +37,12 @@ export class OrderItemsService {
     });
 
     if (updatedCount === 0) {
-      throw new Error(`OrderItem with id ${orderItemId} not found`);
+      throw new AppError(`OrderItem with id ${orderItemId} not found`);
     }
 
     const updated = await this.model.findByPk(orderItemId);
     if (!updated) {
-      throw new Error(`OrderItem fetch failed after update`);
+      throw new AppError(`OrderItem fetch failed after update`);
     }
 
     return updated;
@@ -39,9 +52,13 @@ export class OrderItemsService {
     const orderItem = await this.model.findByPk(orderItemId);
 
     if (!orderItem) {
-      throw new Error(`OrderItem with ID ${orderItemId} does not exist`);
+      throw new AppError(`OrderItem with ID ${orderItemId} does not exist`);
     }
 
-    await orderItem.destroy();
+    try {
+      await orderItem.destroy();
+    } catch (error) {
+      throw new AppError('Failed to delete order items');
+    }
   }
 }

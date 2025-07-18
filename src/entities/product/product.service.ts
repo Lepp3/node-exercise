@@ -1,33 +1,48 @@
 import { sequelize } from '../../config/database.js';
 import { ProductProperties, ProductModel } from './product.model.js';
 import { QueryTypes } from 'sequelize';
+import { AppError } from '../../utility/appError.js';
 
 export class ProductService {
   constructor(private readonly model = ProductModel) {}
 
   async getAll(): Promise<ProductModel[]> {
-    return await this.model.findAll();
+    const products = await this.model.findAll();
+    if (!products) {
+      throw new AppError('Internal Server Error');
+    }
+    return products;
   }
 
-  async getById(id: string): Promise<ProductModel | null> {
-    return await this.model.findByPk(id);
+  async getById(productId: string): Promise<ProductModel | null> {
+    const product = await this.model.findByPk(productId);
+    if (!product) {
+      throw new AppError('Internal Server Error');
+    }
+    return product;
   }
 
-  async create(data: ProductProperties): Promise<ProductModel> {
-    return await this.model.create(data);
+  async create(productData: ProductProperties): Promise<ProductModel> {
+    const createdProduct = await this.model.create(productData);
+    if (!createdProduct) {
+      throw new AppError('Internal Server Error');
+    }
+    return createdProduct;
   }
 
   async update(
     productId: string,
-    data: ProductProperties
+    productData: ProductProperties
   ): Promise<ProductModel> {
-    const [count] = await this.model.update(data, { where: { id: productId } });
+    const [count] = await this.model.update(productData, {
+      where: { id: productId },
+    });
     if (count === 0) {
-      throw new Error(`Product with id ${productId} not found`);
+      throw new AppError(`Product with id ${productId} not found`);
     }
     const updated = await this.model.findByPk(productId);
     if (!updated) {
-      throw new Error(`Product fetch failed after update`);
+      throw new AppError(`Product fetch failed after update`);
     }
     return updated;
   }
@@ -35,10 +50,13 @@ export class ProductService {
   async delete(productId: string): Promise<void> {
     const product = await this.model.findByPk(productId);
     if (!product) {
-      throw new Error(`Product with ID ${productId} does not exist`);
+      throw new AppError(`Product with ID ${productId} does not exist`);
     }
-
-    await product.destroy();
+    try {
+      await product.destroy();
+    } catch (error) {
+      throw new AppError('Internal Server Error');
+    }
   }
 
   async getBestSellingProduct() {
@@ -54,9 +72,13 @@ export class ProductService {
           AND p."deletedAt" IS NULL
         GROUP BY p.name
         ORDER BY SUM(oi.quantity) DESC
-  `,
+      `,
       { type: QueryTypes.SELECT }
     );
+
+    if (!results) {
+      throw new AppError('Internal Server Error');
+    }
 
     return results?.[0] || null;
   }
@@ -91,6 +113,10 @@ export class ProductService {
     `,
       { type: QueryTypes.SELECT }
     );
+
+    if (!results) {
+      throw new AppError('Internal Server Error');
+    }
 
     return results;
   }
